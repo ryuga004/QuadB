@@ -6,23 +6,24 @@ import { TextField, Button, MenuItem, Box, Typography, Paper, Grid } from '@mui/
 const TaskForm = () => {
     const dispatch = useDispatch();
     const [task, setTask] = useState({
+        id: '',
         title: '',
         note: '',
         date: '',
         priority: 'Medium',
         location: '',
+        completed: false,
     });
-
     const handleChange = (e) => {
         setTask({ ...task, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(addTask({ ...task, id: Date.now(), completed: false }));
-        setTask({ title: '', note: '', date: '', priority: 'Medium', location: '' });
+        const newTask = { ...task, id: Date.now() };
+        dispatch(addTask(newTask));
+        setTask({ ...newTask, title: '', note: '', date: '', location: '', priority: 'Medium' });
     };
-
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', padding: 2, width: '100%' }}>
             <Paper
